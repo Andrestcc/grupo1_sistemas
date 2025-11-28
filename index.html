@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Inteligentes - Grupo 05</title>
+    
+    <!-- 1. Cargar Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Configurar tipografía -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .code-scroll::-webkit-scrollbar { height: 8px; }
+        .code-scroll::-webkit-scrollbar-track { background: #2d2d2d; }
+        .code-scroll::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        .code-scroll::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        /* Ocultar elementos por defecto para transiciones */
+        .hidden-mobile { display: none; }
+        @media (min-width: 768px) {
+            .hidden-mobile { display: flex; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 relative">
+    
+    <!-- Barra de Progreso -->
+    <div class="fixed top-0 left-0 w-full h-1 z-50 bg-gray-200">
+        <div id="reading-progress" class="h-full bg-indigo-600 transition-all duration-300" style="width: 0%"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    
+                    <img 
+                        src="image/logo_unjfsc.png"
+                        alt="Logo Universidad" 
+                        class="h-10 w-10 rounded-full object-cover mr-3 border border-indigo-100 shadow-sm shrink-0"
+                    >
+                    
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Sistemas<span class="text-indigo-600">Inteligentes</span></span>
+                </div>
+                
+                <!-- Menú Escritorio -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#intro" class="hover:text-indigo-600 transition font-medium">Introducción</a>
+                    <a href="#tipos" class="hover:text-indigo-600 transition font-medium">Tipos</a>
+                    <a href="#pipeline" class="hover:text-indigo-600 transition font-medium">Pipeline</a>
+                    <a href="#algoritmos" class="hover:text-indigo-600 transition font-medium">Algoritmos</a>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition shadow-sm font-medium">
+                        Recursos
+                    </button>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <!-- Icono Menu -->
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown Móvil (Oculto por defecto) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 shadow-lg absolute w-full z-50">
+            <div class="flex flex-col space-y-3">
+                <a href="#intro" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors py-2 w-full text-left mobile-link">Fundamentos</a>
+                <a href="#tipos" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors py-2 w-full text-left mobile-link">Paradigmas de Aprendizaje</a>
+                <a href="#pipeline" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors py-2 w-full text-left mobile-link">Ingeniería de Características</a>
+                <a href="#algoritmos" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors py-2 w-full text-left mobile-link">Algoritmos y Modelado</a>
+                <a href="#futuro" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors py-2 w-full text-left mobile-link">Tendencias y Ética</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Layout Principal -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            
+            <!-- Columna del Artículo -->
+            <main class="lg:col-span-8">
+                
+                <!-- Cabecera del Artículo -->
+                <header class="mb-10">
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 mb-4 uppercase tracking-wider">
+                        Módulo III
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+                        Fundamentos Teóricos y Prácticos del Machine Learning
+                    </h1>
+                    <div class="flex items-center space-x-4 text-sm text-gray-500 border-b border-gray-200 pb-8">
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold mr-3">
+                                G5
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Grupo 05</p>
+                                <p>Curso: Sistemas Inteligentes • Universidad Nacional José Faustino Sánchez Carrión</p>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Cuerpo del Artículo -->
+                <article class="prose prose-indigo prose-lg max-w-none text-gray-700">
+                    
+                    <!-- Sección 1: Introducción -->
+                    <section id="intro" class="mb-16 scroll-mt-24">
+                        <p class="text-xl text-gray-800 leading-relaxed mb-6 font-medium">
+                            El <strong>Machine Learning (Aprendizaje Automático)</strong> es una disciplina científica del ámbito de la Inteligencia Artificial que crea sistemas capaces de aprender automáticamente. Aprender, en este contexto, implica identificar patrones complejos en millones de datos para predecir comportamientos futuros.
+                        </p>
+                        <div class="bg-slate-50 border-l-4 border-slate-800 p-6 rounded-r-lg mb-8">
+                            <h4 class="font-bold text-slate-900 mb-2">Definición Formal</h4>
+                            <p class="italic text-slate-700 m-0 text-base">
+                                "Se dice que un programa de computadora aprende de la experiencia <strong>E</strong> con respecto a alguna clase de tareas <strong>T</strong> y medida de rendimiento <strong>P</strong>, si su desempeño en las tareas en <strong>T</strong>, medido por <strong>P</strong>, mejora con la experiencia <strong>E</strong>." — Tom Mitchell (1997).
+                            </p>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                            <!-- Icono Layers -->
+                            <svg class="mr-2 text-indigo-600 h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Taxonomía: IA vs. ML vs. DL
+                        </h3>
+                        <p class="mb-4">
+                            Es crucial establecer una jerarquía técnica clara entre estos conceptos:
+                        </p>
+                        <ul class="space-y-3 mb-6 list-disc list-inside bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <li><strong>Inteligencia Artificial (IA):</strong> El campo general de la informática dedicado a la simulación de procesos de inteligencia humana por parte de sistemas computacionales.</li>
+                            <li><strong>Machine Learning (ML):</strong> Un subconjunto de la IA centrado en el desarrollo de algoritmos que permiten a las computadoras aprender de los datos y realizar predicciones o decisiones sin ser programadas explícitamente.</li>
+                            <li><strong>Deep Learning (DL):</strong> Una técnica especializada dentro del ML que utiliza redes neuronales artificiales de múltiples capas (profundas) para modelar abstracciones de alto nivel en datos.</li>
+                        </ul>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                            <div class="bg-white p-5 border border-gray-200 rounded-lg shadow-sm">
+                                <h4 class="font-bold text-gray-900 flex items-center mb-2">
+                                    <svg class="w-5 h-5 text-indigo-500 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    Factores Habilitadores
+                                </h4>
+                                <p class="text-sm">El auge actual se debe a la convergencia de la disponibilidad masiva de datos (<strong>Big Data</strong>) y el incremento exponencial en la capacidad de cómputo paralelo (<strong>GPUs/TPUs</strong>).</p>
+                            </div>
+                            <div class="bg-white p-5 border border-gray-200 rounded-lg shadow-sm">
+                                <h4 class="font-bold text-gray-900 flex items-center mb-2">
+                                    <svg class="w-5 h-5 text-indigo-500 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+                                    Flujo de Inferencia
+                                </h4>
+                                <p class="text-sm font-mono bg-gray-100 p-2 rounded text-center border border-gray-200">Input Data → Modelo Entrenado → Predicción (Output)</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Sección 2: Tipos -->
+                    <section id="tipos" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
+                            Paradigmas de Aprendizaje
+                        </h2>
+                        <p class="mb-6">Los algoritmos de ML se clasifican principalmente según la naturaleza de la señal de aprendizaje o "feedback" disponible para el sistema.</p>
+                        
+                        <div class="overflow-hidden rounded-xl shadow-sm border border-gray-200 mb-8">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Paradigma</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Características Técnicas</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Aplicaciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 font-semibold text-indigo-700 bg-indigo-50/50">Aprendizaje Supervisado</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            El modelo se entrena utilizando un conjunto de datos <strong>etiquetado</strong> (Ground Truth). El objetivo es aprender una función que mapee entradas a salidas.
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            <div class="space-y-1">
+                                                <span class="block">• <strong>Clasificación:</strong> Detección de fraude, diagnósticos.</span>
+                                                <span class="block">• <strong>Regresión:</strong> Predicción de precios, series temporales.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 font-semibold text-indigo-700 bg-indigo-50/50">Aprendizaje No Supervisado</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            Se utilizan datos <strong>no etiquetados</strong>. El sistema intenta inferir la estructura oculta de los datos para encontrar patrones significativos.
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            <div class="space-y-1">
+                                                <span class="block">• <strong>Clustering:</strong> Segmentación de mercado.</span>
+                                                <span class="block">• <strong>Reducción Dimensional:</strong> PCA, t-SNE.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 font-semibold text-indigo-700 bg-indigo-50/50">Aprendizaje por Refuerzo</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            Un agente interactúa con un entorno y aprende una política de actuación óptima mediante señales de <strong>recompensa o castigo</strong>.
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            Robótica, Control de procesos, Videojuegos (AlphaGo).
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Sección 3: Pipeline -->
+                    <section id="pipeline" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
+                            Ingeniería y Pipeline de Datos
+                        </h2>
+                        <p class="mb-6">El desarrollo de un modelo robusto es un proceso ingenieril iterativo que va más allá de la selección del algoritmo. Se estructura en fases críticas:</p>
+                        
+                        <div class="space-y-6">
+                            <!-- Paso 1 -->
+                            <div class="flex group">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-14 w-14 rounded-lg bg-white border-2 border-indigo-100 text-indigo-600 shadow-sm group-hover:border-indigo-500 transition-colors">
+                                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5">
+                                    <h4 class="text-lg leading-6 font-bold text-gray-900">1. Preprocesamiento de Datos (Data Wrangling)</h4>
+                                    <p class="mt-2 text-base text-gray-600">
+                                        Fase crítica que consume el 70-80% del tiempo. Incluye la limpieza de ruido, imputación de valores faltantes y la <strong>Normalización/Estandarización</strong> de características para asegurar la convergencia del algoritmo.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Paso 2 -->
+                            <div class="flex group">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-14 w-14 rounded-lg bg-white border-2 border-indigo-100 text-indigo-600 shadow-sm group-hover:border-indigo-500 transition-colors">
+                                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5">
+                                    <h4 class="text-lg leading-6 font-bold text-gray-900">2. División del Dataset y Entrenamiento</h4>
+                                    <p class="mt-2 text-base text-gray-600">
+                                        Partición estratégica de datos (ej. 80% Train, 20% Test) para mitigar el <strong>Overfitting</strong> (sobreajuste). El modelo debe aprender a generalizar patrones, no a memorizar los datos de entrenamiento.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Paso 3 -->
+                            <div class="flex group">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-14 w-14 rounded-lg bg-white border-2 border-indigo-100 text-indigo-600 shadow-sm group-hover:border-indigo-500 transition-colors">
+                                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5">
+                                    <h4 class="text-lg leading-6 font-bold text-gray-900">3. Evaluación de Métricas</h4>
+                                    <p class="mt-2 text-base text-gray-600">
+                                        Validación cuantitativa mediante métricas específicas: <strong>Accuracy</strong> (Exactitud), <strong>Precision</strong> (Precisión), <strong>Recall</strong> (Sensibilidad) y <strong>F1-Score</strong>. Esencial para determinar la viabilidad del modelo en producción.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Sección 4: Algoritmos -->
+                    <section id="algoritmos" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
+                            Algoritmos Principales
+                        </h2>
+                        <p class="mb-6">Selección de herramientas algorítmicas fundamentales en el estado del arte:</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-indigo-700 mb-2">Regresión Lineal</h4>
+                                <p class="text-sm text-gray-600">Modelo paramétrico que asume una relación lineal entre variables. Minimiza la suma de errores cuadrados para predicción de valores continuos.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-indigo-700 mb-2">Árboles de Decisión</h4>
+                                <p class="text-sm text-gray-600">Modelos no paramétricos que dividen el espacio de datos mediante reglas condicionales jerárquicas. Alta interpretabilidad.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-indigo-700 mb-2">Random Forest</h4>
+                                <p class="text-sm text-gray-600">Método de ensamble (Ensemble Learning) que combina múltiples árboles de decisión para reducir la varianza y mejorar la robustez.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-indigo-700 mb-2">K-NN (K-Nearest Neighbors)</h4>
+                                <p class="text-sm text-gray-600">Algoritmo basado en instancias que clasifica nuevos puntos basándose en la distancia a sus 'k' vecinos más cercanos en el espacio vectorial.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-indigo-700 mb-2">SVM (Máquinas de Vector Soporte)</h4>
+                                <p class="text-sm text-gray-600">Busca el hiperplano óptimo que maximiza el margen de separación entre clases en un espacio de características de alta dimensión.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-indigo-700 mb-2">Redes Neuronales Artificiales</h4>
+                                <p class="text-sm text-gray-600">Sistemas conexionistas inspirados en la biología, capaces de modelar relaciones no lineales complejas. Base del Deep Learning.</p>
+                            </div>
+                        </div>
+
+                        <!-- Bloque de Código - Estilo Mac -->
+                        <div class="my-8">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Ejemplo de Implementación en Python (Scikit-Learn)</h4>
+                            <div class="bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden font-mono text-sm leading-relaxed">
+                                <!-- Controles Ventana -->
+                                <div class="bg-[#2d2d2d] px-4 py-3 flex items-center space-x-2 border-b border-[#3e3e3e]">
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                    <span class="text-gray-400 text-xs ml-4 pl-2 font-sans select-none">linear_regression_demo.py</span>
+                                </div>
+                                <!-- Contenido con Scroll -->
+                                <div class="overflow-x-auto p-6 text-gray-300 code-scroll">
+                                    <pre class="whitespace-pre"><code><span class="text-[#c586c0]">from</span> sklearn.linear_model <span class="text-[#c586c0]">import</span> LinearRegression
+
+<span class="text-[#6a9955]"># 1. Definición del Dataset (Variable Independiente X, Dependiente y)</span>
+X = [[<span class="text-[#b5cea8]">50</span>], [<span className="text-[#b5cea8]">100</span>], [<span className="text-[#b5cea8]">150</span>]] 
+y = [<span className="text-[#b5cea8]">100000</span>, <span className="text-[#b5cea8]">200000</span>, <span className="text-[#b5cea8]">300000</span>]
+
+<span class="text-[#6a9955]"># 2. Instanciación y Entrenamiento del Modelo (Ajuste)</span>
+modelo = LinearRegression() 
+modelo.fit(X, y)
+
+<span class="text-[#6a9955]"># 3. Inferencia: Predecir precio para una entrada de 200m2</span>
+prediccion = modelo.predict([[<span className="text-[#b5cea8]">200</span>]])
+
+<span class="text-[#dcdcaa]">print</span>(f<span className="text-[#ce9178]">"Precio estimado: {prediccion}"</span>)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Sección 5: Futuro -->
+                    <section id="futuro" class="scroll-mt-24">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
+                            Desafíos Éticos y Tendencias Tecnológicas
+                        </h2>
+                        
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Impacto Industrial</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                                    <span class="font-bold block text-slate-800 mb-1">Sector Salud</span>
+                                    <span class="text-sm text-slate-600">Diagnóstico asistido y medicina de precisión mediante análisis de imagenología.</span>
+                                </div>
+                                <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                                    <span class="font-bold block text-slate-800 mb-1">Fintech</span>
+                                    <span class="text-sm text-slate-600">Detección de anomalías en transacciones y calificación crediticia automatizada.</span>
+                                </div>
+                                <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                                    <span class="font-bold block text-slate-800 mb-1">Industria 4.0</span>
+                                    <span class="text-sm text-slate-600">Mantenimiento predictivo basado en telemetría IoT para optimización operativa.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-red-50/50 border-l-4 border-red-500 p-6 rounded-r-lg mb-10">
+                            <h3 class="text-lg font-bold text-red-900 flex items-center mb-3">
+                                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                Consideraciones Éticas Críticas
+                            </h3>
+                            <div class="space-y-3 text-red-800 text-sm">
+                                <p><strong>• Sesgo Algorítmico (Bias):</strong> Riesgo de perpetuar discriminaciones históricas si los datasets de entrenamiento carecen de representatividad estadística adecuada.</p>
+                                <p><strong>• Interpretabilidad (Black Box):</strong> La complejidad de ciertos modelos (como Deep Learning) dificulta la trazabilidad de las decisiones, planteando retos regulatorios en sectores críticos.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 rounded-xl p-8 text-white shadow-xl">
+                            <h3 class="text-2xl font-bold mb-6 flex items-center">
+                                <svg class="mr-2 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                Horizonte Tecnológico
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-slate-700 pt-6">
+                                <div>
+                                    <h5 class="font-bold text-white mb-2">IA Generativa (GenAI)</h5>
+                                    <p class="text-sm text-slate-400">Evolución hacia modelos capaces de sintetizar nuevos datos (texto, imagen, código) con coherencia semántica.</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-white mb-2">Edge AI</h5>
+                                    <p class="text-sm text-slate-400">Despliegue de inferencia en dispositivos periféricos para reducir latencia y preservar privacidad.</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-white mb-2">AutoML</h5>
+                                    <p class="text-sm text-slate-400">Automatización del pipeline de ML, desde la selección de características hasta la optimización de hiperparámetros.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Sección Móvil Créditos -->
+                    <section class="lg:hidden mt-12 pt-8 border-t border-gray-200">
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center">
+                            <svg class="mr-2 h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            Créditos y Autoría
+                        </h3>
+                        <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
+                            <div class="flex items-center mb-4">
+                                <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold border border-indigo-200 mr-3">
+                                    G5
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900">Grupo 05</p>
+                                    <p class="text-xs text-gray-500 uppercase">Integrantes</p>
+                                </div>
+                            </div>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li>• Carlos Susanibar</li>
+                                <li>• Brayan Fernandez Pardo</li>
+                                <li>• Jean Méndez Urbano</li>
+                                <li>• Pablo Tahua Castillo</li>
+                                <li>• Cristhian Yalle Juan de Dios</li>
+                                <li>• Sayid Yalle Juan de Dios</li>
+                            </ul>
+                        </div>
+                    </section>
+                </article>
+
+                <!-- Post-footer Interaction -->
+                <div class="mt-8 pt-8 border-t border-gray-200 flex justify-between items-center text-sm">
+                    <div class="flex space-x-6">
+                        <button class="flex items-center text-gray-500 hover:text-indigo-600 transition font-medium">
+                            <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                            Compartir
+                        </button>
+                        <button class="flex items-center text-gray-500 hover:text-indigo-600 transition font-medium">
+                            <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Discusión
+                        </button>
+                    </div>
+                    <div class="text-gray-400 italic">
+                        Última revisión: Noviembre 2025
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sidebar (Solo Desktop) -->
+            <aside class="hidden lg:block lg:col-span-4 pl-8">
+                <div class="sticky top-24 space-y-8">
+                    
+                    <!-- Tabla de Contenidos -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900 mb-4 text-lg">Estructura del Artículo</h3>
+                        <nav class="flex flex-col space-y-2">
+                            <a href="#intro" class="text-left text-gray-600 hover:text-indigo-600 text-sm py-1.5 flex items-center transition-colors">
+                                <svg class="mr-2 text-gray-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Introducción y Definiciones
+                            </a>
+                            <a href="#tipos" class="text-left text-gray-600 hover:text-indigo-600 text-sm py-1.5 flex items-center transition-colors">
+                                <svg class="mr-2 text-gray-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Paradigmas de Aprendizaje
+                            </a>
+                            <a href="#pipeline" class="text-left text-gray-600 hover:text-indigo-600 text-sm py-1.5 flex items-center transition-colors">
+                                <svg class="mr-2 text-gray-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Pipeline de Ingeniería
+                            </a>
+                            <a href="#algoritmos" class="text-left text-gray-600 hover:text-indigo-600 text-sm py-1.5 flex items-center transition-colors">
+                                <svg class="mr-2 text-gray-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Algoritmos Principales
+                            </a>
+                            <a href="#futuro" class="text-left text-gray-600 hover:text-indigo-600 text-sm py-1.5 flex items-center transition-colors">
+                                <svg class="mr-2 text-gray-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Retos y Futuro
+                            </a>
+                        </nav>
+                    </div>
+
+                    <!-- Tarjeta de Autores -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center space-x-4 mb-4 border-b border-gray-100 pb-4">
+                            <div class="h-12 w-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-700 font-bold text-lg border border-indigo-100">
+                                G5
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Grupo 05</h4>
+                                <p class="text-xs text-gray-500 font-medium">Autores y Colaboradores</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Integrantes:</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center"><div class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2"></div>Carlos Susanibar</li>
+                                <li class="flex items-center"><div class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2"></div>Brayan Fernandez Pardo</li>
+                                <li class="flex items-center"><div class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2"></div>Jean Méndez Urbano</li>
+                                <li class="flex items-center"><div class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2"></div>Pablo Tahua Castillo</li>
+                                <li class="flex items-center"><div class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2"></div>Cristhian Yalle Juan de Dios</li>
+                                <li class="flex items-center"><div class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2"></div>Sayid Yalle Juan de Dios</li>
+                            </ul>
+                        </div>
+                        <div class="flex space-x-4 border-t border-gray-100 pt-4 justify-center">
+                            <a href="#" class="text-gray-400 hover:text-[#0077b5] transition-colors"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+                            <a href="#" class="text-gray-400 hover:text-[#1DA1F2] transition-colors"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-12.7 12.5S.2 5.3 4.1 2c1.6-1.4 4.1 1.2 6.3 1.9 2.2.7 5.6-5.1 11.6.1z"/></svg></a>
+                        </div>
+                    </div>
+
+                    <!-- Recursos Box -->
+                    <div class="bg-slate-900 rounded-xl p-6 text-white shadow-lg">
+                        <h3 class="font-bold mb-2 flex items-center">
+                            <svg class="mr-2 h-4 w-4 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                            Material Complementario
+                        </h3>
+                        <p class="text-sm text-slate-300 mb-4">Accede a los datasets y notebooks utilizados en esta presentación.</p>
+                        <button class="w-full bg-indigo-600 text-white text-sm font-medium py-2.5 rounded-md hover:bg-indigo-700 transition shadow-md border border-indigo-500">
+                            Descargar Recursos
+                        </button>
+                    </div>
+
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="font-bold text-lg tracking-wide">Sistemas Inteligentes</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Plataforma académica para la presentación de Machine Learning en el curso de Sistemas Inteligentes. Contenido revisado y actualizado.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">Navegación</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Plan de Estudios</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Repositorio de Papers</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Referencias Bibliográficas</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">Legal y Créditos</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Propiedad Intelectual</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Uso Educativo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-xs uppercase tracking-wider">
+            &copy; 2025 Grupo 05. Facultad de Ingeniería de Industrial, Sistemas e informática.
+        </div>
+    </footer>
+
+    <!-- Lógica JavaScript (Sin Frameworks para máxima compatibilidad) -->
+    <script>
+        // 1. Lógica del Menú Móvil
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Lógica de la Barra de Progreso
+        const progressBar = document.getElementById('reading-progress');
+        
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+    </script>
+</body>
+</html>
